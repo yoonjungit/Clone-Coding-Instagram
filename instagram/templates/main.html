@@ -12,39 +12,67 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Symbols+Outlined&family=Material+Icons+Round&family=Material+Icons+Sharp&family=Material+Icons+Two+Tone" rel="stylesheet" />
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg bg-white" style ="position : fixed; width:100%; border-bottom : solid 1px lightgrey; height : 60px">
-        <div class="container-fluid" style = "justify-content : space-between; flex-wrap : nowrap; width : 975px; padding : 0px 20px">
-          <a class="navbar-brand" href="#"><img style = "width : 108px",
-                src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png"></a>
-            <!-- <form class="d-flex" role="search"> -->
-              <input class="form-control me-2" style="width:268px ; background-color : #EFEFEF" type="search" placeholder="검색" aria-label="Search">
-              <div>
-                <span class="material-icons" style = "padding : 0px 0px 0px 24px" >
-                    home
-                    </span>
-               <span class="material-symbols-outlined" style = "padding : 0px 0px 0px 12px" >
-                    send
-                    </span>
-               <span class="material-symbols-outlined" style = "padding : 0px 0px 0px 12px" >
-                    add_box
-                    </span>
-                <span class="material-symbols-outlined" style = "padding : 0px 0px 0px 12px" >
-                    explore
-                    </span>
-                <span class="material-symbols-outlined" style = "padding : 0px 0px 0px 12px" >
-                        favorite
-                        </span>
-              </div>
+  <style>
+    /* 프로필 사진 규격 */
+    .box {
+      width: 32px;
+      height: 32px; 
+      border-radius: 70%;
+      overflow: hidden;
+    }
+    .profile {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* 전체 적용 폰트(시스템폰트) */
+    *{
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      font-size : 14px ;
+      font-weight : 500 ;
+      color : #262626
+    }
+  </style>
 
-            </form>
+  <body>
+    <!-- 1. 내비게이션 바 -->
+    <nav class="navbar bg-white" style ="position : fixed; width:100%; border-bottom : solid 1px lightgrey; height : 60px">
+      <div class="container-fluid" style = "justify-content : space-between; flex-wrap : nowrap; width : 975px; padding : 0px 20px; align-items : center">
+        <!-- 1-1. 인스타그램 로고 -->
+        <a class="navbar-brand" href="#"><img style = "width : 108px",
+         src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png"></a>
+        <!-- 1-2. 검색창 -->
+        <input class="form-control me-2" style="width:268px ; background-color : #EFEFEF" type="search" placeholder="검색" aria-label="Search">
+        <!-- 1-3. 아이콘 -->
+        <div>
+          <span class="material-icons" style = "font-size : 29px;padding : 0px 0px 0px 30px" > home </span>
+          <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px" > send </span>
+          <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px" > add_box </span>
+          <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px"> explore </span>
+          <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px" > favorite </span>
         </div>
+      </div>
       </nav>
-    <div style = "display : flex ; flex-direction : row; justify-content : center; padding-top : 65px">
-        <div style = "width : 600px ; height : 1000px">
-            asd
+    <!-- 2. 메인 : 피드/추천 친구 -->
+    <div style = "display : flex ; flex-direction : row; justify-content : center; padding-top : 80px; background-color : #FAFAFA">
+      <!-- 2-1. 피드 -->
+      <div style = "width : 470px ; height : 1000px; border : solid 1px #E6E6E6 ; border-radius : 10px ; background-color:white">
+        <!-- 2-1-1. 프로필 : 사진 / 아이디 / 더보기-->
+        <div style = "display:flex; width:470px ; height : 56px; align-items : center">
+          <div class="box" style="background: #BDBDBD; margin-left : 10px">
+            <img class="profile" src="https://i.pinimg.com/originals/53/7e/f5/537ef59499259ba707068742f91a10f8.jpg">
+          </div>
+          <div style = "margin-left:10px">  shin_chan   
+          </div>
+          <div style = "margin-left : auto; margin-right : 15px">
+            <span class="material-symbols-outlined" style = "color : #262626; font-size : 20px"> more_horiz </span>
+          </div>
+            </div>
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
-        <div style = "width : 400px; height : 1000px">
+        <div style = "width : 319px; height : 1000px; margin-left : 30px">
             asdasd
         </div>
     </div>
