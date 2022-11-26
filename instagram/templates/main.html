@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Symbols+Outlined&family=Material+Icons+Round&family=Material+Icons+Sharp&family=Material+Icons+Two+Tone" rel="stylesheet" />
+    <!-- Bootstrap Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
   </head>
 
   <style>
@@ -54,9 +57,9 @@
       </div>
       </nav>
     <!-- 2. 메인 : 피드/추천 친구 -->
-    <div style = "display : flex ; flex-direction : row; justify-content : center; padding-top : 80px; background-color : #FAFAFA">
+    <div style = "display : flex ; flex-direction : row; justify-content : center; padding : 80px 0px 40px 0px; background-color : #FAFAFA ; height : 1000px">
       <!-- 2-1. 피드 -->
-      <div style = "width : 470px ; height : 1000px; border : solid 1px #E6E6E6 ; border-radius : 10px ; background-color:white">
+      <div style = "width : 470px ; border : solid 1px #E6E6E6 ; border-radius : 10px ; background-color:white">
         <!-- 2-1-1. 프로필 : 사진 / 아이디 / 더보기-->
         <div style = "display:flex; width:470px ; height : 56px; align-items : center">
           <div class="box" style="background: #BDBDBD; margin-left : 10px">
@@ -67,12 +70,40 @@
           <div style = "margin-left : auto; margin-right : 15px">
             <span class="material-symbols-outlined" style = "color : #262626; font-size : 20px"> more_horiz </span>
           </div>
-            </div>
-            <div></div>
-            <div></div>
-            <div></div>
         </div>
-        <div style = "width : 319px; height : 1000px; margin-left : 30px">
+        <!-- 2-1-2. 게시물 / 아이콘 -->
+        <div>
+          <img style = "width : 470px" src ="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNuIEf%2FbtraPurzdkd%2FaGFxQ0JKL0wD3BLYQX4NNk%2Fimg.jpg">
+        </div>
+        <div style = "display : flex ; width : 470 ; height : 46 ; padding-top : 10px">
+          <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 10px" > favorite </span>
+          <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px" > mode_comment </span>
+          <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px" > send </span>
+          <span class="material-symbols-outlined" style = "font-size : 29px; margin-left : auto; margin-right : 15px" > bookmark </span>
+        </div>
+        <!-- 2-1-3. 좋아요 / 게시글 -->
+        <div style = "text-align : left; padding-top: 10px ; margin-left : 10px"> hun_e님 <b>외 21명이</b> 좋아합니다</div>
+        <div style = "text-align : left; padding-top: 10px ; margin-left : 10px"> <b>shin_chan</b> 오늘 떡잎유치원에서 소풍을 다녀왔다. </div>
+        <!-- 2-1-4. 댓글 보기 -->
+        <div style = "color : #8E8E8E; padding-top: 10px ; margin-left : 10px"> 댓글 5개 모두 보기</div>
+        <div style = "display : flex ; padding-top: 6px ; margin-left : 10px; width : 470">
+          <div> <b>maeng_gu</b> 얘들아 내가 내일 초코비 가져갈게 나눠 먹자 </div>
+          <span class="material-symbols-outlined" style = "font-size : 14px ; margin-left : auto; margin-right : 15px" > favorite </span>
+        </div>
+        <div style = "color : #8E8E8E; padding-top: 10px ; margin-left : 10px; font-size : 10px">2시간 전</div>
+        <!-- 2-1-5. 댓글 입력 -->
+        <div style = "width : 470px ; height : 50px ; margin-top : 10px ; border-top : solid 1px #E6E6E6 ; display : flex ; align-items : center">
+          <span class="material-symbols-outlined" style = "font-size : 29px; padding-left : 10px" > sentiment_satisfied </span>
+          <div class="input-group mb-3" style = "margin-top:15px ; margin-right : 10px">
+            <input type="text" class="form-control" placeholder="댓글 달기.." aria-label="Comment" aria-describedby="button-addon2" style = "border:0 ; box-shadow : none">
+            <button class="btn btn-outline-white" type="button" id="button-addon2" style = "color : #86E8FF ; border : 0 ">게시</button>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- 2-2. 메인 : 추천친구 -->
+      <div style = "width : 319px; margin-left : 30px">
             asdasd
         </div>
     </div>
