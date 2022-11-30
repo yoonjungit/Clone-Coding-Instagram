@@ -13,18 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from .views import Sub
-from contents.views import Main, UploadFeed
-from .settings import MEDIA_ROOT,MEDIA_URL
-from django.conf.urls.static import static
+from django.urls import path
+from .views import UploadFeed
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', Main.as_view()),
-    path('', include('contents.urls')),
-    path('', include('users.urls'))
+    path('content/upload', UploadFeed.as_view())
 ]
-
-urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT) 
