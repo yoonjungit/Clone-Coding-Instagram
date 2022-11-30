@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import Sub
-from contents.views import Main
+from contents.views import Main, UploadFeed
+from .settings import MEDIA_ROOT,MEDIA_URL
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Main.as_view())
+    path('', Main.as_view()),
+    path('content/upload', UploadFeed.as_view())
 ]
 
+urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT) 
