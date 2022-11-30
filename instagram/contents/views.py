@@ -5,6 +5,8 @@ from .models import Feed
 from uuid import uuid4
 import os
 from instagram.settings import MEDIA_ROOT
+from users.models import User
+
 #위 settings에서 urls.py에서 잘못 세팅해서 오류가 났었음
 
 # Create your views here.
@@ -13,7 +15,20 @@ class Main(APIView) :
         #select * from contents_feed → contents_feed에 있는 모든 데이터를 가져옴. 데이터는 역순(-id)
         feed_list=Feed.objects.all().order_by('-id') 
 
-        return render(request, "main.html", context=dict(feeds=feed_list))
+        print(request.session['email'])
+        email = request.session['email']
+
+        # 예외(1) 로그인을 안한 경우
+        if email is None :
+            return render(request, "login.html")
+            
+        user = User.objects.filter(email=email).first()
+
+        # 예외(2) 로그인에 실패한 경우(아이디, 비밀번호 오류)
+        if user is None :
+            return render(request, "login.html")
+
+        return render(request, "main.html", context=dict(feeds=feed_list, user=user))
 
 class UploadFeed(APIView) :
     def post(self, request) :

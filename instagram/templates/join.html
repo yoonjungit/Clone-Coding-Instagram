@@ -7,10 +7,12 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- Jquery -->
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-    <title> Instagram </title>
+    <title> Join! Instagram </title>
     <style>
-        /* 폰트 스타일 지정(시스템 폰트) */
+        /* 폰트 스타일 지정(시스템) */
         *{
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
         font-size : 14px ;
@@ -19,8 +21,10 @@
         }
     </style>
   </head>
+  
 
-  <body style = "background-color : #FAFAFA ; width : 100% ; min-height:100%">
+  <body>
+    <div style = "background-color : #FAFAFA ; width : 100% ; min-height:100%">
     <!-- 1. 가입 박스 -->
     <div style = "width : 350px ; height : 700px ; display : flex ; flex-direction: column; position: absolute; top: 50%; left: 50%; margin:-350px 0 0 -175px ">
         <div style = "background-color : white ; border : 1px solid #E6E6E6 ; width : 350px ; height : 600px ; text-align : center ; margin:auto; padding : 0px 40px">
@@ -39,34 +43,69 @@
             
             <!-- 가입 입력 양식 -->
             <div class="form-floating mb-3" style = "margin-top : 15px">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" style = "height: 38px ; background-color : #FAFAFA">
-                <label for="floatingInput" style="font-size:12px ; color : #8E8E8E ; padding-bottom : 3px">휴대폰 번호 또는 이메일 주소</label>
+                <input type="email" class="form-control" id="input_email" style = "height: 38px ; background-color : #FAFAFA" placeholder = "휴대폰 번호 또는 이메일 주소">
+                <label for="input_email" style="font-size:12px ; color : #8E8E8E ; padding-bottom : 3px">휴대폰 번호 또는 이메일 주소</label>
             </div>
             <div class="form-floating mb-3" style = "margin-top : 8px">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" style = "height: 38px ; background-color : #FAFAFA">
-                <label for="floatingInput" style="font-size:12px ; color : #8E8E8E">성명</label>
+                <input type="email" class="form-control" id="input_name"  style = "height: 38px ; background-color : #FAFAFA" placeholder = "성명">
+                <label for="input_name" style="font-size:12px ; color : #8E8E8E">성명</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" style = "height: 38px ; background-color : #FAFAFA">
-                <label for="floatingInput" style="font-size:12px ; color : #8E8E8E">사용자 이름</label>
+                <input type="email" class="form-control" id="input_nickname"  style = "height: 38px ; background-color : #FAFAFA" placeholder = "사용자 이름">
+                <label for="input_nickname" style="font-size:12px ; color : #8E8E8E">사용자 이름</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" style = "height: 38px ; background-color : #FAFAFA" placeholder="Password">
-                <label for="floatingPassword" style="font-size:12px ; color : #8E8E8E">비밀번호</label>
+                <input type="password" class="form-control" id="input_password" style = "height: 38px ; background-color : #FAFAFA" placeholder="비밀번호">
+                <label for="input_password" style="font-size:12px ; color : #8E8E8E ;">비밀번호</label>
             </div>
 
             <!-- 연락처 동기화 안내링크 -->
             <div style = "color : #8E8E8E ; font-size: 12px ; margin-top : 10px">저희 서비스를 이용하는 사람이 회원님의 연락처 정보를 Instagram에 업로드했을 수도 있습니다.
                 <a href = "https://www.facebook.com/help/instagram/261704639352628" style = "color : #8E8E8E ; font-size: 12px ; font-weight:bold ; text-decoration-line: none"> 더 알아보기</a>
             </div>
-            <!-- 가입 버튼 (임시로 페이스북 페이지 링크) -->
-            <button type="button" class="btn text-white" style = "background-color : #B2DFFC; width : 268px ; height : 31px ; font-weight : bold ; margin-top : 15px" onclick="window.open('https://facebook.com')">가입</button>
+            <!-- 가입 버튼 -->
+            <button id = "join_button" type="button" class="btn text-white" style = "background-color : #B2DFFC; width : 268px ; height : 31px ; font-weight : bold ; margin-top : 15px">가입</button>
         </div>
 
         <!-- 2. 로그인 링크(login.html과 연결) -->
         <div style = "background-color : white ; border : 1px solid #E6E6E6 ; width : 350px ; height : 70px ; display : flex ; align-items: center; justify-content: center;">
             <div>계정이 있으신가요? <a href = "/login" style = "color : #0095F6 ; text-decoration-line: none"> 로그인</a> </div>
         </div>
-    </div>  
+    </div> 
+    </div> 
+
+    <!-- 가입 버튼 클릭 시 ajax -->
+    <script>
+        $('#join_button').click(function(){
+        
+        let email = $('#input_email').val();
+        let name = $('#input_name').val();
+        let nickname = $('#input_nickname').val();
+        let password = $('#input_password').val();
+   
+        console.log(email, password, nickname, name) 
+        $.ajax({
+          url : "/join/",
+          data : {
+            email : email,
+            password : password,
+            nickname : nickname,
+            name : name
+          } ,
+          method : "POST",
+          success : function (data) {
+            console.log("성공") ; 
+            alert("회원가입을 성공했습니다. 로그인해주세요.")
+            location.replace("/login/")
+          },
+          error : function (request, status, error) {
+            console.log("에러")
+          },
+          complete : function(){
+            console.log("완료");
+          }
+        })
+      })
+    </script> 
   </body>
 </html>
