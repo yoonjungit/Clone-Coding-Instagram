@@ -87,7 +87,7 @@
           <div class="dropdown">
             <a role="button" id = "dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               <div class="box" style="background: #BDBDBD; margin-left : 15px ; width : 24px ; height : 24px">
-                <img class="profile" src="https://i.pinimg.com/originals/53/7e/f5/537ef59499259ba707068742f91a10f8.jpg">
+                <img class="profile" src="{%get_media_prefix%}{{user.profile_img}}">
               </div>
             </a>
           
@@ -114,10 +114,8 @@
           <!-- 2-1-1. 프로필 : 사진 / 아이디 / 더보기-->
           <div style = "display:flex; width:470px ; height : 56px; align-items : center">
             <div class="box" style="background: #BDBDBD; margin-left : 10px">
-              <img class="profile" src="{{feed.profile_image}}">
-            </div>
-            <div style = "margin-left:10px"> {{feed.user_id}}  
-            </div>
+              <img class="profile" src="{{feed.profile_image}}"> </div>
+            <div style = "margin-left:10px"> {{feed.user_id}}  </div>
             <div style = "margin-left : auto; margin-right : 15px">
               <span class="material-symbols-outlined" style = "color : #262626; font-size : 20px"> more_horiz </span>
             </div>
@@ -160,7 +158,7 @@
         <!-- 2-2-1. 본인 프로필 -->
         <div style = "display:flex; width:319px ; height : 56px; align-items : center">
           <div class="box" style="background: #BDBDBD; margin-left : 10px ; width : 56px ; height : 56px">
-            <img class="profile" src="https://i.pinimg.com/originals/53/7e/f5/537ef59499259ba707068742f91a10f8.jpg">
+            <img class="profile" src="{%get_media_prefix%}{{user.profile_img}}">
           </div>
           <div style = "margin-left:10px"> {{user.nickname}}<br><a style = "color : #8E8E8E">{{user.name}}</a>  
           </div>
@@ -214,7 +212,7 @@
           <div style = 'width : 29px ; height : 29px'></div>
           <div style = 'font-size : 16px ; font-weight : bold'>새 게시물 만들기</div>
           <div> 
-            <span class="material-symbols-outlined" style = 'font-size : 29px'>close</span>
+            <span class="material-symbols-outlined modal_close" style = 'font-size : 29px'>close</span>
           </div>
         </div>
         <!-- 이미지 업로드 -->
@@ -251,6 +249,14 @@
 
 
     <script>
+      $(".modal_close").click(function(){
+        $('#first_modal').css({
+        display : 'none'
+        })
+        $('#second_modal').css({
+          display : 'none'
+        })
+      })
       let files ; 
 
       //3-1-1. add-box 클릭시
@@ -270,8 +276,8 @@
         let file = files[0] ;
         let image = files[0].name;
         let content = $('#input_feed_content').val(); //글 내용
-        let user_id = "shin.chan";
-        let profile_image = "https://i.pinimg.com/originals/53/7e/f5/537ef59499259ba707068742f91a10f8.jpg";
+        let user_id = "{{user.nickname}}";
+        let profile_image = "{%get_media_prefix%}{{user.profile_img}}";
         
         let fd = new FormData() ;
         
