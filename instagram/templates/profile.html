@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <!-- Bootstrap CSS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Symbols+Outlined&family=Material+Icons+Round&family=Material+Icons+Sharp&family=Material+Icons+Two+Tone" rel="stylesheet" />
+    <!-- Bootstrap Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <!-- Jquery -->
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <title>{{user.name}}(@{{user.nickname}})</title>
+    <style>
+        /* 프로필 사진 규격 */
+        .box {
+          width: 32px;
+          height: 32px; 
+          border-radius: 70%;
+          overflow: hidden;
+        }
+        .profile {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        /* 전체 적용 폰트(시스템폰트) */
+        *{
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+          font-size : 14px ;
+          font-weight : 500 ;
+          color : #262626
+        }
+    /* 모달 창(3) */
+    .modal_overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+        z-index : 9;
+    }
+
+    .modal_window {
+        background: white;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        position: relative;
+
+    }
+    </style>
+
+</head>
+<body>
+    <!-- 1. 내비게이션 바 -->
+    <nav class="navbar bg-white" style ="position : fixed; width:100%; border-bottom : solid 1px lightgrey; height : 60px ; z-index : 10">
+        <div class="container-fluid" style = "display : flex ; justify-content : space-between; flex-wrap : nowrap; width : 975px; padding : 0px 20px; align-items : center">
+          <!-- 1-1. 인스타그램 로고 -->
+          <a class="navbar-brand" href="/"><img style = "width : 108px",
+           src = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png"></a>
+          <!-- 1-2. 검색창 -->
+          <input class="form-control me-2" style="width:268px ; background-color : #EFEFEF" type="search" placeholder="검색" aria-label="Search">
+          <!-- 1-3. 아이콘 -->
+          <div style = "display : flex ; flex-wrap :nowrap ; align-items: center;" >
+            <span class="material-icons" style = "font-size : 29px;padding : 0px 0px 0px 30px" onclick = "location.href = '/'"> home </span>
+            <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px" > send </span>
+            <span id = "nav_bar_add_box" class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px" > add_box </span>
+            <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px"> explore </span>
+            <span class="material-symbols-outlined" style = "font-size : 29px; padding : 0px 0px 0px 15px" > favorite </span>
+          <!-- 1-4. 프로필 드롭다운 메뉴 -->
+            <div class="dropdown">
+              <a role="button" id = "dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="box" style="background: #BDBDBD; margin-left : 15px ; width : 24px ; height : 24px">
+                  <img class="profile" src="{%get_media_prefix%}{{user.profile_img}}">
+                </div>
+              </a>
+            
+              <ul class="dropdown-menu" id = "dropdownMenuLink">
+                <li><a class="dropdown-item" href="/profile">프로필</a></li>
+                <li><a class="dropdown-item" href="#">저장됨</a></li>
+                <li><a class="dropdown-item" href="#">설정</a></li>
+                <li><a class="dropdown-item" href="#">내 활동</a></li>
+                <li><a class="dropdown-item" href="#">계정 전환</a></li>
+                <div style = "color : #E6E6E6">―――――――――――――――</div>
+                <li><a class="dropdown-item" href="/logout">로그아웃</a></li>
+              </ul>
+            </div>
+          </div> <!-- 1-3.아이콘 끝 -->
+        </div>
+      </nav>
+    
+    <!-- 2. 프로필 / 게시글 -->
+    <div style = "width : 975px ; padding-top : 70px ; margin : 0 auto">
+        <!-- 2-1. 프로필 -->
+        <div style = "height : 152px ; margin : 30px 0 ; display : flex ; flex-direction: row ; align-items : center">
+            <!-- 2-1-1. 프로필 사진 -->
+            <div class="box" style="background: #BDBDBD ; width : 150px ; height : 150px ; margin: 0 75px"> 
+                <img class="profile" src="{%get_media_prefix%}{{user.profile_img}}"> </div>
+            <!-- 2-1-2. 아이디, 팔로워 등 -->
+            <div style = "margin-left : 30px">
+                <div style = "display : flex ; align-items: center">
+                    <div style = "font-size : 28px ; font-weight: 100">{{user.nickname}}</div>
+                    <!-- 프로필 사진 업데이트 -->
+                        <!-- display:none으로 화면상에서 파일 확인 창을 숨겨둔다 -->
+                        <button id = "button_profile_upload" type="button" class="btn btn-white" style = "width : 130px ; height : 30px ; font-weight : bold ; border : solid 1px #E6E6E6 ; border-radius:5px; margin-left : 20px">프로필 사진 편집</button>
+                        <input type="file" id="input_fileupload" onChange="profile_upload();" style="display:none">
+                    <span class="material-symbols-outlined" style = "font-size: 29px ; margin-left : 15px">settings</span>
+                </div>
+                <div style = "display : flex ; margin : 20px 0">
+                    <div style = "font-size : 16px">게시물 11</div>
+                    <div style = "font-size : 16px ; margin : 0 30px">팔로워 11 </div>
+                    <div style = "font-size : 16px">팔로잉 11 </div>
+                </div>
+                
+                <div style = "font-size : 16px; font-weight : bold">{{user.name}}</div>
+            </div>
+        </div> <!-- 2-1.프로필 끝 -->
+        <div style = "border-bottom : solid 1px #E6E6E6 ; margin : 40px 0"></div>
+        <div></div>
+        <div></div> 
+        <div></div>
+    </div>
+
+    <!--3-1. 사진업로드 모달창 -->
+    <div id ="first_modal" class="modal_overlay">
+        <div class="modal_window" style = "width : 503px ; height : 600px">
+          <!-- 모달 창 레이아웃 -->
+          <div style = 'display : flex ; justify-content: space-between; width : 100% ; height : 40px ; align-items: center; border-bottom : solid 1px #BDBDBD'>
+            <div style = 'width : 29px ; height : 29px'></div>
+            <div style = 'font-size : 16px ; font-weight : bold'>새 게시물 만들기</div>
+            <div> 
+              <span class="material-symbols-outlined modal_close" style = 'font-size : 29px'>close</span>
+            </div>
+          </div>
+          <!-- 이미지 업로드 -->
+          <div class = 'img_upload_space' style = 'width : 100% ; height : 540px ; display : flex ; direction : column ; align-items : center ; justify-content : center'>
+            <div style = "width : 100% ; height :100%"> </div>
+          </div>
+        </div>
+      </div> <!-- end 3-1. -->
+  
+      <!--3-2. 글 작성 모달창 -->
+      <div id ="second_modal" class="modal_overlay">
+        <div class="modal_window" style = "width : 840px ; height : 543px">
+          <!-- 모달 창 레이아웃 -->
+          <div style = 'display : flex ; justify-content: space-between; width : 100% ; height : 40px ; align-items: center; border-bottom : solid 1px #BDBDBD'>
+            <div><span class="material-symbols-outlined" style = 'font-size : 29px ; padding-left : 10px'> arrow_back </span></div>
+            <div style = 'font-size : 16px ; font-weight : bold'>새 게시물 만들기</div>
+            <button id = "feed_create_button" class="btn btn-outline-white" type="button" id="button-addon2" 
+              style = "color : #0095F6 ; border : 0 ; font-weight : bold ">공유하기</button>
+          </div>
+  
+          <!-- 사진 보이기 및 글 작성 칸 -->
+          <div style = 'display : flex ; flex-direction: row ;justify-content: space-between ; align-items: center'>
+            <div style = 'display : flex ; flex-direction: row ' >
+              <div class = "img_upload_space" style = "width :503px ; height : 503px ; border-right: solid 1px #BDBDBD">
+              </div>
+              <div> 
+                <textarea id = "input_feed_content" class="form-control" id="exampleFormControlTextarea1" style = 'width : 337px ; height : 503px ; border : 0 ; box-shadow : none' rows="5"></textarea>
+              </div>
+              <div></div>
+            </div>        
+          </div>
+        </div>
+      </div>
+  
+  
+      <script>
+      $(".modal_close").click(function(){
+        $('#first_modal').css({
+        display : 'none'
+        })
+        $('#second_modal').css({
+          display : 'none'
+        })
+      })
+        let files ; 
+  
+        //3-1-1. add-box 클릭시
+        $('#nav_bar_add_box').click(function(){
+          $('#first_modal').css({
+            display : 'flex'
+          })
+          $(document.body).css({
+            overflow : 'hidden'
+          })
+        })
+  
+        // 글 작성 후(공유하기) 서버로 넘기기
+        $('#feed_create_button').click(function(){
+          alert('공유하기 눌렀다.');
+          
+          let file = files[0] ;
+          let image = files[0].name;
+          let content = $('#input_feed_content').val(); //글 내용
+          let user_id = "{{user.nickname}}";
+          let profile_image = "{%get_media_prefix%}{{user.profile_img}}";
+          
+          let fd = new FormData() ;
+          
+          fd.append('file', file) ;
+          fd.append('image', image);
+          fd.append('content', content);
+          fd.append('user_id', user_id);
+          fd.append('profile_image', profile_image);
+  
+          $.ajax({
+            url : "/content/upload",
+            data : fd,
+            method : "POST",
+            processData : false ,
+            contentType : false,
+            success : function (data) {
+              console.log("성공") ; 
+            },
+            error : function (request, status, error) {
+              console.log("에러")
+            },
+            complete : function(){
+              console.log("완료");
+              location.replace("");
+            }
+          })
+        })
+  
+  
+        // 3-1-2. 이미지 업로드 (드래그 드롭)
+        $('.img_upload_space')
+        .on("dragover", dragOver)
+        .on("dragleave", dragOver)
+        .on("drop", uploadFiles);
+      
+        function dragOver(e){
+          e.stopPropagation();
+          e.preventDefault();
+        
+          if (e.type == "dragover") {
+            $(e.target).css({
+              "background-color": "gray",
+              "outline-offset": "-20px"
+            });
+          } else {
+            $(e.target).css({
+              "background-color": "white",
+              "outline-offset": "-10px"
+            });
+          }
+        }
+  
+        // 사진 업로드 시(파일 형식, 개수 판별)
+        function uploadFiles(e) {
+          e.stopPropagation();
+          e.preventDefault();
+    
+          e.dataTransfer = e.originalEvent.dataTransfer;
+          files = e.target.files || e.dataTransfer.files;
+          if (files.length > 1) {
+              alert('한장만 올릴 수 있습니다');
+              return;
+          }
+          if (files[0].type.match(/image.*/)) {
+            $('#first_modal').css({
+            display : 'none'
+            })
+            $('#second_modal').css({
+              display : 'flex'
+            })
+            $('.img_upload_space').css({
+              "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+              "outline": "none",
+              "background-size": "cover",
+              "background-position" : "center"
+            });
+          }else{
+            alert('이미지가 아닙니다.');
+            return;
+          }      
+        }
+
+        $('#button_profile_upload').click(function(){
+          $('#input_fileupload').click() ;
+        });
+
+        function profile_upload(){
+          let file = $('#input_fileupload')[0].files[0];
+
+          let email = "{{user.email}}";
+          
+          let fd = new FormData() ;
+          
+          fd.append('file', file) ;
+          fd.append('email', email);
+          
+          $.ajax({
+            url : "/profile/upload",
+            data : fd,
+            method : "POST",
+            processData : false ,
+            contentType : false,
+            success : function (data) {
+              console.log("성공") ; 
+            },
+            error : function (request, status, error) {
+              console.log("에러")
+            },
+            complete : function(){
+              console.log("완료");
+              location.replace("/profile/");
+            }
+          });
+        
+          }
+
+    </script>
+
+</body>
+</html>

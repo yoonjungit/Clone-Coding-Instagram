@@ -15,8 +15,7 @@ class Main(APIView) :
         #select * from contents_feed → contents_feed에 있는 모든 데이터를 가져옴. 데이터는 역순(-id)
         feed_list=Feed.objects.all().order_by('-id') 
 
-        print(request.session['email'])
-        email = request.session['email']
+        email = request.session.get('email', None)
 
         # 예외(1) 로그인을 안한 경우
         if email is None :
@@ -51,3 +50,21 @@ class UploadFeed(APIView) :
         Feed.objects.create(image = file, content = content, user_id = user_id, profile_image=profile_image, like_count=0)
 
         return Response(status = 200 )
+        
+class Profile(APIView) :
+    def get (self, request) :
+        feed_list=Feed.objects.all().order_by('-id') 
+
+        email = request.session.get('email', None)
+
+        # 예외(1) 로그인을 안한 경우
+        if email is None :
+            return render(request, "login.html")
+            
+        user = User.objects.filter(email=email).first()
+
+        # 예외(2) 로그인에 실패한 경우(아이디, 비밀번호 오류)
+        if user is None :
+            return render(request, "login.html")
+
+        return render(request, "profile.html", context=dict(user=user))
