@@ -13,8 +13,13 @@ from users.models import User
 class Main(APIView) :
     def get(self, request) :
         #select * from contents_feed → contents_feed에 있는 모든 데이터를 가져옴. 데이터는 역순(-id)
-        feed_list=Feed.objects.all().order_by('-id') 
+        feed_object_list=Feed.objects.all().order_by('-id')
+        feed_list = []
 
+        for feed in feed_object_list :
+            user = User.objects.filter(email=feed.email).first()
+            feed_list.append(dict(image=feed.image, content = feed.content, like_count=feed.like_count, profile_img=user.profile_img, nickname=user.nickname))
+        
         email = request.session.get('email', None)
 
         # 예외(1) 로그인을 안한 경우
@@ -42,12 +47,10 @@ class UploadFeed(APIView) :
                 destination.write(chunk)
 
         file = uuid_name
-        image = request.data.get('image')
         content = request.data.get('content')
-        user_id = request.data.get('user_id')
-        profile_image = request.data.get('profile_image')
+        email = request.session.get('email', None)
 
-        Feed.objects.create(image = file, content = content, user_id = user_id, profile_image=profile_image, like_count=0)
+        Feed.objects.create(image = file, content = content, email=email, like_count=0)
 
         return Response(status = 200 )
         

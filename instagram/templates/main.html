@@ -114,8 +114,8 @@
           <!-- 2-1-1. 프로필 : 사진 / 아이디 / 더보기-->
           <div style = "display:flex; width:470px ; height : 56px; align-items : center">
             <div class="box" style="background: #BDBDBD; margin-left : 10px">
-              <img class="profile" src="{{feed.profile_image}}"> </div>
-            <div style = "margin-left:10px"> {{feed.user_id}}  </div>
+              <img class="profile" src="{% get_media_prefix %}{{feed.profile_img}}"> </div>
+            <div style = "margin-left:10px"> {{feed.nickname}}  </div>
             <div style = "margin-left : auto; margin-right : 15px">
               <span class="material-symbols-outlined" style = "color : #262626; font-size : 20px"> more_horiz </span>
             </div>
