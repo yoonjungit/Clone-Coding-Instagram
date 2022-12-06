@@ -134,11 +134,13 @@
           <div style = "text-align : left; padding-top: 10px ; margin-left : 10px"> hun_e님 <b>외 {{feed.like_count}}명이</b> 좋아합니다</div>
           <div style = "text-align : left; padding-top: 10px ; margin-left : 10px"> <b>{{feed.user_id}}</b> {{feed.content}} </div>
           <!-- 2-1-4. 댓글 보기 -->
-          <div style = "color : #8E8E8E; padding-top: 10px ; margin-left : 10px"> 댓글 5개 모두 보기</div>
+          <div style = "color : #8E8E8E; padding-top: 10px ; margin-left : 10px"> 댓글 모두 보기</div>
+          {%for reply in feed.reply_list%}
           <div style = "display : flex ; padding-top: 6px ; margin-left : 10px; width : 470">
-            <div> <b>maeng_gu</b> 얘들아 내가 내일 초코비 가져갈게 나눠 먹자 </div>
+            <div> <b>{{reply.nickname}}</b> {{reply.reply_content}} </div>
             <span class="material-symbols-outlined" style = "font-size : 14px ; margin-left : auto; margin-right : 15px" > favorite </span>
           </div>
+          {% endfor %}
           <div style = "color : #8E8E8E; padding-top: 10px ; margin-left : 10px; font-size : 10px">2시간 전</div>
           <!-- 2-1-5. 댓글 입력 -->
           <div style = "width : 470px ; height : 50px ; margin-top : 10px ; border-top : solid 1px #E6E6E6 ; display : flex ; align-items : center">

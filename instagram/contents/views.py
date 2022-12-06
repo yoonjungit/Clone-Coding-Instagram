@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Feed
+from .models import Feed, Reply, Like, Bookmark
 from uuid import uuid4
 import os
 from instagram.settings import MEDIA_ROOT
@@ -18,7 +18,15 @@ class Main(APIView) :
 
         for feed in feed_object_list :
             user = User.objects.filter(email=feed.email).first()
-            feed_list.append(dict(image=feed.image, content = feed.content, like_count=feed.like_count, profile_img=user.profile_img, nickname=user.nickname))
+            reply_object_list = Reply.objects.filter(feed_id = feed.id)
+            reply_list = []
+            for reply in reply_object_list :
+                user = User.objects.filter(email=feed.email).first()
+                reply_list.append(dict(reply_content=reply.reply_content, nickname=user.nickname))
+
+            feed_list.append(dict(image=feed.image, content = feed.content, like_count=feed.like_count, 
+                                    profile_img=user.profile_img, nickname=user.nickname, reply_list = reply_list
+                                    ))
         
         email = request.session.get('email', None)
 
@@ -71,3 +79,13 @@ class Profile(APIView) :
             return render(request, "login.html")
 
         return render(request, "profile.html", context=dict(user=user))
+
+class UploadReply(APIView) :
+    def post(self, request) :
+        feed_id = request.data.get('feed_id', None)
+        reply_content = request.data.get('reply_content', None)
+        email = request.session.get('email', None)
+
+        Reply.objects.create(feed_id=feed_id, reply_content=reply_content, email=email)
+
+        return Response(status=200)
