@@ -18,5 +18,6 @@ from .views import UploadFeed, Profile
 
 urlpatterns = [
     path('content/upload', UploadFeed.as_view()),
+    path('reply/', UploadFeed.as_view()),
     path('profile/', Profile.as_view()),
 ]
