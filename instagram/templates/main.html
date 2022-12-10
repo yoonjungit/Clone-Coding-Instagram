@@ -134,12 +134,14 @@
           <div style = "text-align : left; padding-top: 10px ; margin-left : 10px"> <b>{{feed.user_id}}</b> {{feed.content}} </div>
           <!-- 2-1-4. 댓글 보기 -->
           <div style = "color : #8E8E8E; padding-top: 10px ; margin-left : 10px"> 댓글 모두 보기</div>
+          <div id="reply_list_{{feed.id}}">
           {%for reply in feed.reply_list%}
           <div style = "display : flex ; padding-top: 6px ; margin-left : 10px; width : 470">
             <div> <b>{{reply.nickname}}</b> {{reply.reply_content}} </div>
             <span class="material-symbols-outlined" style = "font-size : 14px ; margin-left : auto; margin-right : 15px" > favorite </span>
           </div>
           {% endfor %}
+        </div>
           <div style = "color : #8E8E8E; padding-top: 10px ; margin-left : 10px; font-size : 10px">2시간 전</div>
           <!-- 2-1-5. 댓글 입력 -->
           <div style = "width : 470px ; height : 50px ; margin-top : 10px ; border-top : solid 1px #E6E6E6 ; display : flex ; align-items : center">
@@ -271,7 +273,10 @@
         success : function(data){
           console.log("성공") ;
           alert("댓글 성공");
-          location.replace("")
+          // $("#reply_list_"+feed_id).append("<div style = 'display : flex ; padding-top: 6px ; margin-left : 10px; width : 470'><b>{{user.nickname}}</b>" + reply_content + "</div>");
+          $("#reply_list_"+feed_id).append("<div style = 'display : flex ; padding-top: 6px ; margin-left : 10px; width : 470'><div> <b>{{user.nickname}}</b>" + reply_content + 
+            "</div><span class='material-symbols-outlined' style = 'font-size : 14px ; margin-left : auto; margin-right : 15px' > favorite </span></div>");
+          // {location.replace("")}
         },
         error : function(request, status, error){
           console.log("에러");
