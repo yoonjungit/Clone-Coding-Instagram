@@ -22,11 +22,11 @@ class Main(APIView) :
             reply_list = []
             for reply in reply_object_list :
                 user = User.objects.filter(email=feed.email).first()
-                reply_list.append(dict(reply_content=reply.reply_content, nickname=user.nickname))
+                reply_user = User.objects.filter(email=reply.email).first()
+                reply_list.append(dict(reply_content=reply.reply_content, reply_nickname = reply_user.nickname))
 
             feed_list.append(dict(id = feed.id, image=feed.image, content = feed.content, like_count=feed.like_count, 
-                                    profile_img=user.profile_img, nickname=user.nickname, reply_list = reply_list
-                                    ))
+                                    profile_img=user.profile_img, reply_list = reply_list, reply_nickname = reply_user.nickname))
         
         email = request.session.get('email', None)
 

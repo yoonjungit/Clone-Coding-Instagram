@@ -137,7 +137,7 @@
           <div id="reply_list_{{feed.id}}">
           {%for reply in feed.reply_list%}
           <div style = "display : flex ; padding-top: 6px ; margin-left : 10px; width : 470">
-            <div> <b>{{reply.nickname}}</b> {{reply.reply_content}} </div>
+            <div> <b>{{reply.reply_nickname}} </b> {{reply.reply_content}} </div>
             <span class="material-symbols-outlined" style = "font-size : 14px ; margin-left : auto; margin-right : 15px" > favorite </span>
           </div>
           {% endfor %}
@@ -258,7 +258,6 @@
         console.log(reply_id);
         let reply_content = $('#'+reply_id).val();
         console.log(reply_content);
-
         if(reply_content.length <= 0){
           alert("댓글을 입력하세요");
           return 0;
@@ -273,8 +272,7 @@
         success : function(data){
           console.log("성공") ;
           alert("댓글 성공");
-          // $("#reply_list_"+feed_id).append("<div style = 'display : flex ; padding-top: 6px ; margin-left : 10px; width : 470'><b>{{user.nickname}}</b>" + reply_content + "</div>");
-          $("#reply_list_"+feed_id).append("<div style = 'display : flex ; padding-top: 6px ; margin-left : 10px; width : 470'><div> <b>{{user.nickname}}</b>" + reply_content + 
+          $("#reply_list_"+feed_id).append("<div style = 'display : flex ; padding-top: 6px ; margin-left : 10px; width : 470'><div> <b>{{user.nickname}} </b>" + reply_content + 
             "</div><span class='material-symbols-outlined' style = 'font-size : 14px ; margin-left : auto; margin-right : 15px' > favorite </span></div>");
           // {location.replace("")}
         },
