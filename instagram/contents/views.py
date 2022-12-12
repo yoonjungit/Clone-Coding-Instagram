@@ -26,7 +26,7 @@ class Main(APIView) :
                 reply_list.append(dict(reply_content=reply.reply_content, reply_nickname = reply_user.nickname))
 
             feed_list.append(dict(id = feed.id, image=feed.image, content = feed.content, like_count=feed.like_count, 
-                                    profile_img=user.profile_img, reply_list = reply_list, reply_nickname = reply_user.nickname))
+                                    profile_img=user.profile_img, reply_list = reply_list, reply_nickname = reply_user.nickname, nickname = user.nickname))
         
         email = request.session.get('email', None)
 
