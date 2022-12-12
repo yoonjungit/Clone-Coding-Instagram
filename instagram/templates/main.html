@@ -258,6 +258,7 @@
         console.log(reply_id);
         let reply_content = $('#'+reply_id).val();
         console.log(reply_content);
+        
         if(reply_content.length <= 0){
           alert("댓글을 입력하세요");
           return 0;
@@ -281,6 +282,7 @@
         },
         complete : function(){
           console.log("완료");
+          $('#'+reply_id).val("");
         }
       })
       });
