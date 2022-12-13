@@ -32,12 +32,17 @@
       height: 100%;
       object-fit: cover;
     }
-    /* 전체 적용 폰트(시스템폰트) */
     *{
+    /* 전체 적용 폰트(시스템폰트) */
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
       font-size : 14px ;
       font-weight : 500 ;
-      color : #262626
+      color : #262626;
+    /* 드래그 방지 */
+      -webkit-user-select:none;     /* 구글, 사파리 브라우저 */
+      -moz-user-select:none;    /* 파이어폭스 브라우저 */
+      -ms-user-select:none;    /* 익스플로러에 적용 */
+      user-select:none    /* 전체 페이지 선택 방지 */
     }
     /* 모달 창(3) */
     .modal_overlay {
