@@ -45,8 +45,8 @@ class Main(APIView) :
             
             feed_list.append(dict(id = feed.id, image=feed.image, content = feed.content,
                                     profile_img=user.profile_img, reply_list = reply_list, 
-                                    reply_nickname = reply_user.nickname, nickname = user.nickname,
-                                    like_count=like_count, is_liked = is_liked, is_marked = is_marked))
+                                    nickname = user.nickname,like_count=like_count, 
+                                    is_liked = is_liked, is_marked = is_marked))
         
         email = request.session.get('email', None)
 
@@ -78,7 +78,7 @@ class UploadFeed(APIView) :
         content = request.data.get('content')
         email = request.session.get('email', None)
 
-        Feed.objects.create(image = file, content = content, email=email, like_count=0)
+        Feed.objects.create(image = file, content = content, email=email)
 
         return Response(status = 200 )
         
