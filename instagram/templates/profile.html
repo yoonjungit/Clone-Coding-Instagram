@@ -60,6 +60,13 @@
           border: 1px solid rgba(255, 255, 255, 0.18);
           position: relative;
         }
+        /* 아이콘 커서 스타일 */
+        .material-icons {
+          cursor : pointer
+        }
+        .material-symbols-outlined {
+          cursor : pointer ;
+        }
     </style>
 
 </head>
@@ -127,10 +134,37 @@
                 <div style = "font-size : 16px; font-weight : bold">{{user.name}}</div>
             </div>
         </div> <!-- 2-1.프로필 끝 -->
-        <div style = "border-bottom : solid 1px #E6E6E6 ; margin : 40px 0"></div>
-        <div></div>
-        <div></div> 
-        <div></div>
+        
+        <div style = "border-bottom : solid 1px #E6E6E6 ; margin-top : 40px"></div>
+        <!-- 2-2. 게시물 / 좋아요 / 북마크(저장됨) -->
+        <!-- 2-2-1. 버튼 : 게시물 / 좋아요 / 북마크(저장됨) -->
+        <div style="width : 306px ; display : flex ; justify-content : space-between ; margin : 20px 0px 5px 334px">
+          <div id = "button_feed_list" style = "color : #8E8E8E ; font-weight: bold; font-size : 12px ; cursor : pointer">
+            <span class="material-symbols-outlined" style = "color : #8E8E8E ; font-size : 12px">grid_on</span> 게 시 물</div>
+          <div id = "button_like_feed_list" style = "color : #8E8E8E ; font-weight: bold; font-size : 12px ; cursor : pointer">
+            <span class="material-symbols-outlined" style = "color : #8E8E8E ; font-size : 12px">favorite</span> 좋 아 요</div> 
+          <div id = "button_bookmark_feed_list" style = "color : #8E8E8E ; font-weight: bold; font-size : 12px ; cursor : pointer">
+            <span class="material-symbols-outlined" style = "color : #8E8E8E ; font-size : 12px">bookmark</span> 저 장 됨</div>
+        </div>
+        <!-- 2-2-2. 게시물 목록 -->
+        <div id = "feed_list" style="display:flex ;flex-wrap : wrap ; width : 975px">
+          {% for feed in feed_list %}
+          <div> 
+            <img style = "width : 306px ; height : 306px ; margin : 15px 9px ; object-fit:cover" src ="{% get_media_prefix %}{{feed.image}}"> </div>
+          {% endfor %}
+        </div>
+        <div id = "like_feed_list" style="display:none ;flex-wrap : wrap ; width : 975px">
+          {% for feed in like_feed_list %}
+          <div> 
+            <img style = "width : 306px ; height : 306px ; margin : 15px 9px ; object-fit:cover" src ="{% get_media_prefix %}{{feed.image}}"> </div>
+          {% endfor %}
+        </div>
+        <div id = "bookmark_feed_list" style="display:none ;flex-wrap : wrap ; width : 975px">
+          {% for feed in bookmark_feed_list %}
+          <div> 
+            <img style = "width : 306px ; height : 306px ; margin : 15px 9px ; object-fit:cover" src ="{% get_media_prefix %}{{feed.image}}"> </div>
+          {% endfor %}
+        </div>
     </div>
 
     <!--3-1. 사진업로드 모달창 -->
@@ -178,6 +212,40 @@
   
   
       <script>
+      $("#button_feed_list").click(function(){
+        $('#feed_list').css({
+          display: 'flex' 
+        });
+        $('#like_feed_list').css({
+          display: 'none' 
+        });
+        $('#bookmark_feed_list').css({
+          display: 'none' 
+        });
+      })
+      $("#button_like_feed_list").click(function(){
+        $('#feed_list').css({
+          display: 'none' 
+        });
+        $('#like_feed_list').css({
+          display: 'flex' 
+        });
+        $('#bookmark_feed_list').css({
+          display: 'none' 
+        });
+      })
+      $("#button_bookmark_feed_list").click(function(){
+        $('#feed_list').css({
+          display: 'none' 
+        });
+        $('#like_feed_list').css({
+          display: 'none' 
+        });
+        $('#bookmark_feed_list').css({
+          display: 'flex' 
+        });
+      })
+
       $(".modal_close").click(function(){
         $('#first_modal').css({
         display : 'none'

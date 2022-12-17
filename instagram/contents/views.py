@@ -99,7 +99,16 @@ class Profile(APIView) :
         if user is None :
             return render(request, "login.html")
 
-        return render(request, "profile.html", context=dict(user=user))
+        # 게시물 / 좋아요 한 게시물 / 북마크 한 게시물 보여주기
+        feed_list = Feed.objects.filter(email=email).all()
+        like_list = list(Like.objects.filter(email=email, is_like=True).values_list('feed_id', flat=True))
+        like_feed_list = Feed.objects.filter(id__in=like_list)
+        bookmark_list = list(Bookmark.objects.filter(email=email, is_marked=True).values_list('feed_id', flat=True))
+        bookmark_feed_list = Feed.objects.filter(id__in=bookmark_list)
+
+        return render(request, "profile.html", context=dict(user=user, feed_list=feed_list,
+                                                            like_list=like_list, like_feed_list=like_feed_list,
+                                                            bookmark_list=bookmark_list, bookmark_feed_list=bookmark_feed_list))
 
 class UploadReply(APIView) :
     def post(self, request) :
