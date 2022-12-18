@@ -40,13 +40,16 @@ class Main(APIView) :
                 if reply_user != None : 
                     reply_list.append(dict(reply_content=reply.reply_content, reply_nickname = reply_user.nickname))
 
+            reply_count = Reply.objects.filter(feed_id=feed.id).count()
+            print(reply_count)
             like_count = Like.objects.filter(feed_id=feed.id, is_like=True).count()
             is_liked = Like.objects.filter(feed_id=feed.id, email = email, is_like=True).exists()
             is_marked = Bookmark.objects.filter(feed_id=feed.id, email = email, is_marked=True).exists()
             
+        
             feed_list.append(dict(id = feed.id, image=feed.image, content = feed.content,
                                     profile_img=user.profile_img, reply_list = reply_list, 
-                                    nickname = user.nickname,like_count=like_count, 
+                                    nickname = user.nickname,like_count=like_count,reply_count=reply_count,
                                     is_liked = is_liked, is_marked = is_marked))
         
         email = request.session.get('email', None)
