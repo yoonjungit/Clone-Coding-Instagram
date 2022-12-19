@@ -199,9 +199,10 @@
         <!-- 2-2-1. 본인 프로필 -->
         <div style = "display:flex; width:319px ; height : 56px; align-items : center">
           <div class="box" style="background: #BDBDBD; margin-left : 10px ; width : 56px ; height : 56px">
-            <img class="profile" src="{%get_media_prefix%}{{user.profile_img}}">
+            <a href="/profile"><img class="profile" src="{%get_media_prefix%}{{user.profile_img}}"></a>
           </div>
-          <div style = "margin-left:10px"> {{user.nickname}}<br><a style = "color : #8E8E8E">{{user.name}}</a>  
+          <div style = "margin-left:10px"> <a href="/profile" style = "color : #262626 ; text-decoration-line: none">{{user.nickname}}</a><br>
+            <a href="/profile" style = "color : #8E8E8E ; text-decoration-line: none;">{{user.name}}</a>  
           </div>
           <div style =  "margin-left : auto"> <a href="#" style = "font-size : 12px ; color : #0095F6 ; font-weight : bold ; text-decoration : none"> 전환 </a> </div>
         </div>
