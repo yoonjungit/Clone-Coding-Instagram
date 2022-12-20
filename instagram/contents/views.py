@@ -41,7 +41,6 @@ class Main(APIView) :
                     reply_list.append(dict(reply_content=reply.reply_content, reply_nickname = reply_user.nickname))
 
             reply_count = Reply.objects.filter(feed_id=feed.id).count()
-            print(reply_count)
             like_count = Like.objects.filter(feed_id=feed.id, is_like=True).count()
             is_liked = Like.objects.filter(feed_id=feed.id, email = email, is_like=True).exists()
             is_marked = Bookmark.objects.filter(feed_id=feed.id, email = email, is_marked=True).exists()
