@@ -44,12 +44,14 @@ class Main(APIView) :
             like_count = Like.objects.filter(feed_id=feed.id, is_like=True).count()
             is_liked = Like.objects.filter(feed_id=feed.id, email = email, is_like=True).exists()
             is_marked = Bookmark.objects.filter(feed_id=feed.id, email = email, is_marked=True).exists()
-            
+            like_bool = False
+            print(like_count)
+            if like_count > 0 : like_bool = True
         
             feed_list.append(dict(id = feed.id, image=feed.image, content = feed.content,
                                     profile_img=user.profile_img, reply_list = reply_list, 
                                     nickname = user.nickname,like_count=like_count,reply_count=reply_count,
-                                    is_liked = is_liked, is_marked = is_marked))
+                                    is_liked = is_liked, is_marked = is_marked, like_bool = like_bool))
         
         email = request.session.get('email', None)
 
